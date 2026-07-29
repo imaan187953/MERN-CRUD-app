@@ -57,6 +57,4 @@ npm run dev
 | PUT    | `/updateUser/:id` | Update a user     |
 | DELETE | `/deleteUser/:id` | Delete a user     |
 
-## License
-
-This project is licensed under the MIT License.
+---
