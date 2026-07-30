@@ -12,12 +12,14 @@ const CreateUser = () => {
   const Submit = (e) => {
     e.preventDefault();
 
-    axios
-      .post("http://localhost:3001/createUser", {
+    axios.post(
+      "https://mern-crud-app-production-e156.up.railway.app/createUser",
+      {
         name,
         email,
         age,
-      })
+      }
+    )
       .then(() => navigate("/"))
       .catch((err) => console.log(err));
   };

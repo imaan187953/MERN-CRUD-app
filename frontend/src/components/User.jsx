@@ -10,15 +10,15 @@ const User = () => {
   }, []);
 
   const getUsers = () => {
-    
-      axios.get("https://mern-crud-app-production-e156.up.railway.app")
+    axios.get("https://mern-crud-app-production-e156.up.railway.app")
       .then((result) => setUsers(result.data))
       .catch((err) => console.log(err));
   };
 
   const deleteUser = (id) => {
-    axios
-      .delete("http://localhost:3001/deleteUser/" + id)
+    axios.delete(
+      "https://mern-crud-app-production-e156.up.railway.app/deleteUser/" + id
+    )
       .then(() => getUsers())
       .catch((err) => console.log(err));
   };
