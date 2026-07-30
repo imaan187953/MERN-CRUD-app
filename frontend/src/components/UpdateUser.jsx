@@ -12,8 +12,9 @@ const UpdateUser = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/getUser/" + id)
+    axios.get(
+      "https://mern-crud-app-production-e156.up.railway.app/getUser/" + id
+    )
       .then((result) => {
         setName(result.data.name);
         setEmail(result.data.email);
@@ -25,12 +26,14 @@ const UpdateUser = () => {
   const Update = (e) => {
     e.preventDefault();
 
-    axios
-      .put("http://localhost:3001/updateUser/" + id, {
+    axios.put(
+      "https://mern-crud-app-production-e156.up.railway.app/updateUser/" + id,
+      {
         name,
         email,
         age,
-      })
+      }
+    )
       .then(() => navigate("/"))
       .catch((err) => console.log(err));
   };

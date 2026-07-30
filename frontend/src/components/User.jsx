@@ -10,8 +10,8 @@ const User = () => {
   }, []);
 
   const getUsers = () => {
-    axios
-      .get("http://localhost:3001")
+    
+      axios.get("https://mern-crud-app-production-e156.up.railway.app")
       .then((result) => setUsers(result.data))
       .catch((err) => console.log(err));
   };
