@@ -1,7 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const UserModel = require("./models/User");
+
+
 
 const app = express();
 
@@ -11,8 +15,8 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-    .connect("mongodb://localhost:27017/crud")
-    .then(() => console.log("MongoDB Connected"))
+    .connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB Atlas Connected"))
     .catch((err) => console.log(err));
 
 // Get All Users
@@ -50,14 +54,14 @@ app.put("/updateUser/:id", (req, res) => {
     const { id } = req.params;
 
     UserModel.findByIdAndUpdate(
-  id,
-  {
-    name: req.body.name,
-    email: req.body.email,
-    age: req.body.age,
-  },
-  { returnDocument: "after" }
-)
+        id,
+        {
+            name: req.body.name,
+            email: req.body.email,
+            age: req.body.age,
+        },
+        { returnDocument: "after" }
+    )
         .then((user) => res.json(user))
         .catch((err) => res.status(500).json(err));
 });
