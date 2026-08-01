@@ -23,7 +23,11 @@ mongoose
 app.get("/", (req, res) => {
     UserModel.find({})
         .then((users) => res.json(users))
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => {
+            res.status(400).json({
+                message: err.message,
+            });
+        });
 });
 
 // Get Single User
@@ -32,7 +36,11 @@ app.get("/getUser/:id", (req, res) => {
 
     UserModel.findById(id)
         .then((user) => res.json(user))
-        .catch((err) => res.status(500).json(err));
+        .catch((err) => {
+            res.status(400).json({
+                message: err.message,
+            });
+        });
 });
 
 // Create User
@@ -60,7 +68,10 @@ app.put("/updateUser/:id", (req, res) => {
             email: req.body.email,
             age: req.body.age,
         },
-        { returnDocument: "after" }
+        {
+            new: true,
+            runValidators: true
+        }
     )
         .then((user) => res.json(user))
         .catch((err) => res.status(500).json(err));

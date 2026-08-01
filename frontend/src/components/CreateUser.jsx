@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateUser = () => {
   const [name, setName] = useState("");
@@ -12,16 +13,33 @@ const CreateUser = () => {
   const Submit = (e) => {
     e.preventDefault();
 
+    if (name.trim() === "") {
+      return toast.error("Name cannot be empty");
+    }
+
+    if (email.trim() === "") {
+      return toast.error("Email cannot be empty");
+    }
+
+    if (age < 1 || age > 120) {
+      return toast.error("Age must be between 1 and 120");
+    }
+
     axios.post(
       "https://mern-crud-app-production-e156.up.railway.app/createUser",
       {
-        name,
-        email,
+        name: name.trim(),
+        email: email.trim(),
         age,
       }
     )
-      .then(() => navigate("/"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        toast.success("User created successfully!");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Failed to create user");
+      });
   };
 
   return (
@@ -47,6 +65,9 @@ const CreateUser = () => {
           />
 
           <input
+            type="number"
+            min="1"
+            max="120"
             className="form-control mb-3"
             placeholder="Age"
             value={age}

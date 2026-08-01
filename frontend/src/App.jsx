@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import User from "./components/User";
 import CreateUser from "./components/CreateUser";
@@ -13,6 +15,8 @@ function App() {
         <Route path="/create" element={<CreateUser />} />
         <Route path="/update/:id" element={<UpdateUser />} />
       </Routes>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </BrowserRouter>
   );
 }

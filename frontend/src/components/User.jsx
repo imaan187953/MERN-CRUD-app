@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -19,8 +20,13 @@ const User = () => {
     axios.delete(
       "https://mern-crud-app-production-e156.up.railway.app/deleteUser/" + id
     )
-      .then(() => getUsers())
-      .catch((err) => console.log(err));
+      .then(() => {
+        toast.success("User deleted successfully!");
+        getUsers();
+      })
+      .catch(() => {
+        toast.error("Failed to delete user");
+      });
   };
 
   return (

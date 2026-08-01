@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateUser = () => {
   const { id } = useParams();
@@ -26,16 +27,33 @@ const UpdateUser = () => {
   const Update = (e) => {
     e.preventDefault();
 
+    if (name.trim() === "") {
+      return toast.error("Name cannot be empty");
+    }
+
+    if (email.trim() === "") {
+      return toast.error("Email cannot be empty");
+    }
+
+    if (age < 1 || age > 120) {
+      return toast.error("Age must be between 1 and 120");
+    }
+
     axios.put(
       "https://mern-crud-app-production-e156.up.railway.app/updateUser/" + id,
       {
-        name,
-        email,
+        name: name.trim(),
+        email: email.trim(),
         age,
       }
     )
-      .then(() => navigate("/"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        toast.success("User updated successfully!");
+        navigate("/");
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Update failed");
+      });
   };
 
   return (
@@ -61,6 +79,9 @@ const UpdateUser = () => {
           />
 
           <input
+            type="number"
+            min="1"
+            max="120"
             className="form-control mb-3"
             placeholder="Enter Updated Age"
             value={age}
